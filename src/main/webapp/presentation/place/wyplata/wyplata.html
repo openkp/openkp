@@ -1,0 +1,138 @@
+<h3>Wynagrodzenia pracowników</h3>
+<!-- START lista pracowników -->
+<div class="row">
+	<div class="col-md-6">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-solid box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Okres</h3>
+					</div>
+					<div class="box-body">
+						<form class="form-inline">
+							<div class="form-group">
+								<select id="miesiac" name="miesiac" class="form-control" ng-model="miesiac" ng-options="t for t in miesiace">
+									<option value="">Miesiąc</option>
+								</select> <input type="text" class="form-control" id="rok" name="rok" placeholder="Rok" ng-model="rok">
+								<button id="oblicz" name="oblicz" class="btn btn-primary" ng-click="oblicz()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Oblicz
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="box box-solid box-primary">
+					<div class="box-header">
+						<h3 class="box-title">Pracownik</h3>
+					</div>
+					<div class="box-body">
+						<div id="gridPracownicy" ui-grid-resize-columns ui-grid-selection ui-grid="gridOptions"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="box box-solid box-primary">
+			<div class="box-header">
+				<h3 class="box-title">Wynagrodzenie</h3>
+			</div>
+			<div class="box-body">
+				<form id="wyplataForm" name="wyplataForm" class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="wynagrodzenieZasadnicze" class="col-lg-4 control-label">Wynagrodzenie zasadnicze</label>
+						<div id="wynagrodzenieZasadniczeControls" class="col-lg-5">
+							<input id="wynagrodzenieZasadnicze" name="wynagrodzenieZasadnicze" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.wynagrodzenieZasadnicze" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="rentowe" class="col-lg-4 control-label">Rentowe</label>
+						<div id="rentoweControls" class="col-lg-5">
+							<input id="rentowe" name="rentowe" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaRentowaPracownika" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="emerytalne" class="col-lg-4 control-label">Emerytalne</label>
+						<div id="emerytalneControls" class="col-lg-5">
+							<input id="emerytalne" name="emerytalne" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaEmerytalnaPracownika" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="chorobowe" class="col-lg-4 control-label">Chorobowe</label>
+						<div id="choroboweControls" class="col-lg-5">
+							<input id="chorobowe" name="chorobowe" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaChorobowaPracownika" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="sumaSkladek" class="col-lg-4 control-label">Suma składek</label>
+						<div id="sumaSkladekControls" class="col-lg-5">
+							<input id="sumaSkladek" name="sumaSkladek" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.sumaSkladek" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="przychodyPodlegajaceOpodatkowaniu" class="col-lg-4 control-label">Przychody podlegające opodatkowaniu</label>
+						<div id="przychodyPodlegajaceOpodatkowaniuControls" class="col-lg-5">
+							<input id="przychodyPodlegajaceOpodatkowaniu" name="przychodyPodlegajaceOpodatkowaniu" type="text" style="font-weight: bolder;"
+								class="form-control" readonly ng-model="wyplata.przychod" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="kosztyUzyskaniaPrzychodu" class="col-lg-4 control-label">Koszty uzyskania przychodu</label>
+						<div id="kosztyUzyskaniaPrzychoduControls" class="col-lg-5">
+							<input id="kosztyUzyskaniaPrzychodu" name="kosztyUzyskaniaPrzychodu" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.kosztyUzyskaniaPrzychodu" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="podstawaOpodatkowania" class="col-lg-4 control-label">Podstawa opodatkowania</label>
+						<div id="podstawaOpodatkowaniaControls" class="col-lg-5">
+							<input id="podstawaOpodatkowania" name="podstawaOpodatkowania" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.podstawa" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="zaliczkaNaPodatek" class="col-lg-4 control-label">Zaliczka na podatek</label>
+						<div id="zaliczkaNaPodatekControls" class="col-lg-5">
+							<input id="zaliczkaNaPodatek" name="zaliczkaNaPodatek" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.zaliczkaPodatkowa" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="skladkiZdrowotneNaliczone" class="col-lg-4 control-label">Składki zdrowotne naliczone</label>
+						<div id="skladkiZdrowotneNaliczoneControls" class="col-lg-5">
+							<input id="skladkiZdrowotneNaliczone" name="skladkiZdrowotneNaliczone" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.skladkaZdrowotna" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="skladkiZdrowotneOdliczone" class="col-lg-4 control-label">Składki zdrowotne odliczone</label>
+						<div id="skladkiZdrowotneOdliczoneControls" class="col-lg-5">
+							<input id="skladkiZdrowotneOdliczone" name="skladkiZdrowotneOdliczone" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.skladkaZdrowotnaOdliczona" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="podatekDoZaplacenia" class="col-lg-4 control-label">Podatek do zapłacenia</label>
+						<div id="podatekDoZaplaceniaControls" class="col-lg-5">
+							<input id="podatekDoZaplacenia" name="podatekDoZaplacenia" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.podatek" />
+						</div>
+					</div>
+					<hr />
+					<div class="form-group">
+						<label for="ror" class="col-lg-4 control-label">Na ROR</label>
+						<div id="rorControls" class="col-lg-5">
+							<input id="ror" name="ror" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.wyngrodzenieNetto" />
+						</div>
+					</div>
+					<hr />
+				</form>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>

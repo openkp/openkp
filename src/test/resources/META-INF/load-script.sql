@@ -1,0 +1,1 @@
+insert into pracownik(id, version, imie, nazwisko, email, telefon, data_zatrudnienia, data_zwolnienia, wynagrodzenie, koszt_podwyzszony) values(hibernate_sequence.nextval, 0, 'Antoni', 'Kowal', 'asdf@wp.pl', '12341234', '2000-01-01', '9999-12-31', 12344, 0);

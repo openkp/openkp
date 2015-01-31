@@ -1,0 +1,118 @@
+<header ng-switch on="$location.path().indexOf('/pracownik/nowy') > -1">
+	<h3 ng-switch-when="true">Zatrudnienie pracownika</h3>
+	<h3 ng-switch-when="false">Edycja pracownika</h3>
+</header>
+<!-- START panel-->
+<div class="box box-primary">
+	<div class="box-header">
+		<h3 class="box-title">Dane pracownika</h3>
+	</div>
+	<div class="box-body">
+		<form id="PracownikForm" name="PracownikForm" class="form-horizontal" role="form">
+			<div ng-show="displayError" class="alert alert-danger">
+				<strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.imie.$invalid}">
+				<label for="imie" class="col-lg-2 control-label">Imię</label>
+				<div id="imieControls" class="col-lg-5">
+					<input id="imie" name="imie" type="text" required class="form-control" ng-model="pracownik.imie" placeholder="Wprowadź imię pracownika"></input>
+					<span class="help-block error" ng-show="PracownikForm.imie.$error.required">Pole jest wymagane</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.nazwisko.$invalid}">
+				<label for="nazwisko" class="col-lg-2 control-label">Nazwisko</label>
+				<div id="nazwiskoControls" class="col-lg-5">
+					<input id="nazwisko" name="nazwisko" type="text" required class="form-control" ng-model="pracownik.nazwisko"
+						placeholder="Wprowadź nazwisko pracownika"></input> <span class="help-block error" ng-show="PracownikForm.nazwisko.$error.required">Pole
+						jest wymagane</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.email.$invalid}">
+				<label for="email" class="col-lg-2 control-label">Email</label>
+				<div id="emailControls" class="col-lg-5">
+					<input id="email" name="email" type="text" class="form-control" ng-model="pracownik.email" placeholder="Wprowadź email pracownika"></input>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.phoneNumber.$invalid}">
+				<label for="phoneNumber" class="col-lg-2 control-label">Telefon</label>
+				<div id="phoneNumberControls" class="col-lg-3">
+					<input id="phoneNumber" name="phoneNumber" type="text" class="form-control" ng-model="pracownik.telefon"
+						placeholder="Wprowadź numer telefonu pracownika"></input>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.dataZatrudnienia.$invalid}">
+				<label for="dataZatrudnienia" class="col-lg-2 control-label">Data zatrudnienia</label>
+				<div id="dataZatrudnieniaControls" class="col-lg-2">
+					<p class="input-group">
+						<input id="dataZatrudnienia" name="dataZatrudnienia" type="text" class="form-control" datepicker-popup="{{format}}"
+							ng-model="pracownik.dataZatrudnienia" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true"
+							close-text="Close" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+					<span class="help-block error" ng-show="PracownikForm.dataZatrudnienia.$error.required">Pole jest wymagane</span> <span class="help-block error"
+						ng-show="PracownikForm.dataZatrudnienia.$error.dateFormat">does not match format "yyyy-MM-dd" (e.g. 2013-12-01)</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.dataZwolnienia.$invalid}">
+				<label for="dataZwolnienia" class="col-lg-2 control-label">Data zwolnienia</label>
+				<div id="dataZwolnieniaControls" class="col-lg-2">
+					<p class="input-group">
+						<input id="dataZwolnienia" name="dataZwolnienia" type="text" class="form-control" datepicker-popup="{{format}}"
+							ng-model="pracownik.dataZwolnienia" is-open="openedZwolnienie" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+							close-text="Close" /> <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="openZwolnienie($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+					<span class="help-block error" ng-show="PracownikForm.dataZwolnienia.$error.dateFormat">does not match format "yyyy-MM-dd" (e.g.
+						2013-12-01)</span>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{'has-error': PracownikForm.wynagrodzenie.$invalid}">
+				<label for="wynagrodzenie" class="col-lg-2 control-label">Wynagrodzenie</label>
+				<div id="wynagrodzenieControls" class="col-lg-3">
+					<input id="wynagrodzenie" name="wynagrodzenie" type="text" required class="form-control" ng-model="pracownik.wynagrodzenie"
+						placeholder="Wprowadź wynagrodzenie pracownika"></input> <span class="help-block error" ng-show="PracownikForm.wynagrodzenie.$error.required">Pole
+						jest wymagane</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Email</label>
+				<div class="col-lg-5">
+					<input type="email" placeholder="Email" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-lg-2 control-label">Password</label>
+				<div class="col-lg-5">
+					<input type="password" placeholder="Password" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-offset-2 col-lg-5">
+					<div class="checkbox">
+						<label> <input id="kosztPodwyzszony" name="kosztPodwyzszony" type="checkbox" ng-model="pracownik.kosztPodwyzszony"> Koszt podwyższony
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-lg-offset-2 col-lg-5">
+					<button id="savePracownik" name="savePracownik" class="btn btn-primary" ng-disabled="isClean() || PracownikForm.$invalid" ng-click="save()">
+						<span class="glyphicon glyphicon-ok-sign"></span> Zapisz
+					</button>
+					<button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()">
+						<span class="glyphicon glyphicon-remove-sign"></span> Anuluj
+					</button>
+					<button id="deletePracownik" name="deletePracownik" class="btn btn-danger" ng-show="pracownik.id" ng-click="remove()">
+						<span class="glyphicon glyphicon-trash"></span> Usuń
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

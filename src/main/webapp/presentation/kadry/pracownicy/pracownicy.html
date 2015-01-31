@@ -1,0 +1,33 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button id="szukaj" name="szukaj" type="button" class="btn btn-primary" ng-click="performSearch()">
+							<span class="glyphicon glyphicon-search"></span> Odśwież
+						</button>
+						<a id="zatrudnij" name="Zatrudnij" class="btn btn-primary" href="#/pracownik/nowy"><span class="glyphicon glyphicon-plus-sign"></span>
+							Zatrudnij</a>
+						<button id="edytuj" name="edytuj" class="btn btn-primary" ng-click="performEdit()">
+							<span class="glyphicon glyphicon-edit"></span> Edytuj
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">Pracownicy</h3>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+				<div id="gridPracownicy" ui-grid-resize-columns ui-grid-selection ui-grid="gridOptions"></div>
+			</div>
+		</div>
+	</div>
+</div>
