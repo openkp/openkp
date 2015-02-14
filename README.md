@@ -10,9 +10,10 @@ Budowa za pomocą mavena i uruchomienie na wildfly
 * Skopiuj plik 'openkp.war' do katalogu 'deployments' Twojego serwera aplikacji
 
 Uruchomienie za pomocą [Dockera](https://docker.io)
- # pobierz obraz 
+------
+    # pobierz obraz 
     $ docker pull openkp/openkp
- # uruchom kontener(port 8080 z Wildfly zostanie zamapowany na lokalny port 80)
+    # uruchom kontener(port 8080 z Wildfly zostanie zamapowany na lokalny port 80)
     $ docker run -it -p 80:8080 openkp
- # wpisz w przeglądarce adres
-    http://localhost/openkp
+wpisz w przeglądarce adres
+[http://localhost/openkp](http://localhost/openkp)
