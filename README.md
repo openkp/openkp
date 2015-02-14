@@ -14,6 +14,6 @@ Uruchomienie za pomocą [Dockera](https://docker.io)
     # pobierz obraz 
     $ docker pull openkp/openkp
     # uruchom kontener(port 8080 z Wildfly zostanie zamapowany na lokalny port 80)
-    $ docker run -it -p 80:8080 openkp
+    $ docker run -it -p 80:8080 openkp/openkp
 wpisz w przeglądarce adres
 [http://localhost/openkp](http://localhost/openkp)
