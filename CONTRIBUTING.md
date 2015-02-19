@@ -1,6 +1,6 @@
 # Uczestnictwo w OpenKP
 
-Jeżeli chciałbyś współuczestniczyć w tworzeniu OpenKP możesz to zrobić w prosty sposób tworząc konto na GitHub i robiąc forka repozytorium OpenKP a następnie wysyłając pull request z Twoimi zmianami.ing the repository and sending a pull request.
+Jeżeli chciałbyś współuczestniczyć w tworzeniu OpenKP możesz to zrobić w prosty sposób tworząc konto na GitHub i robiąc forka repozytorium OpenKP a następnie wysyłając pull request z Twoimi zmianami.
 
 ## Licencja
 
