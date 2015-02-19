@@ -1,9 +1,6 @@
-# Uczestnictwo w OpenKp
+# Uczestnictwo w OpenKP
 
-Jeżeli chciałbyś współuczestniczyć w tworzeniu OpenKP
-If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.
-
-When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible.
+Jeżeli chciałbyś współuczestniczyć w tworzeniu OpenKP możesz to zrobić w prosty sposób tworząc konto na GitHub i robiąc forka repozytorium OpenKP a następnie wysyłając pull request z Twoimi zmianami.ing the repository and sending a pull request.
 
 ## Licencja
 
