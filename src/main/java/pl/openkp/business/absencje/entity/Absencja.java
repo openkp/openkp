@@ -43,25 +43,31 @@ public class Absencja implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
+    public static final String PROP_ID = "id";
 
     @Version
     @Column(name = "version")
     private int version;
+    public static final String PROP_VERSION = "version";
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar dataOd;
+    public static final String PROP_DATA_OD = "dataOd";
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar dataDo;
+    public static final String PROP_DATA_DO = "dataDo";
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @XmlTransient
     private Pracownik pracownik;
+    public static final String PROP_PRACOWNIK = "pracownik";
 
     @Enumerated(EnumType.STRING)
     private TypAbsencji typAbsencji;
+    public static final String PROP_TYP_ABSENCJI = "typAbsencji";
 
     public Long getId() {
         return id;

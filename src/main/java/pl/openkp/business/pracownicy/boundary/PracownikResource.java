@@ -150,9 +150,9 @@ public class PracownikResource {
         return Json.createObjectBuilder().add("id", absencja.getId()).add("title", absencja.getTypAbsencji().getOpis())
                 .add("start", javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataOd()))
                 .add("end", javax.xml.bind.DatatypeConverter.printDateTime(cal))
-                .add("dataOd", javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataOd()))
-                .add("dataDo", javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataDo())).add("allDay", true)
-                .add("version", absencja.getVersion());
+                .add(Absencja.PROP_DATA_OD, javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataOd()))
+                .add(Absencja.PROP_DATA_DO, javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataDo())).add("allDay", true)
+                .add(Absencja.PROP_VERSION, absencja.getVersion());
     }
 
     @DELETE
@@ -160,7 +160,7 @@ public class PracownikResource {
     @Produces("application/json")
     public JsonObject usunAbsencje(@PathParam("pracownikId") Long pracownikId, @PathParam("absencjaId") String absencjaId) {
         em.remove(em.find(Absencja.class, Long.parseLong(absencjaId)));
-        return Json.createObjectBuilder().add("id", absencjaId).build();
+        return Json.createObjectBuilder().add(Absencja.PROP_ID, absencjaId).build();
     }
 
     @POST
@@ -172,8 +172,8 @@ public class PracownikResource {
         absencja.setDataDo(new GregorianCalendar(entity.getInt("rokDo"), entity.getInt("miesiacDo"), entity.getInt("dzienDo")));
         absencja.setPracownik(em.getReference(Pracownik.class, pracownikId));
         absencja.setTypAbsencji(TypAbsencji.fromOpis(entity.getString("title")));
-        absencja.setId(asLong(entity.get("id") == null ? null : entity.get("id").toString()));
-        absencja.setVersion(entity.get("version") == null ? 0 : entity.getInt("version"));
+        absencja.setId(asLong(entity.get(Absencja.PROP_ID) == null ? null : entity.get(Absencja.PROP_ID).toString()));
+        absencja.setVersion(entity.get(Absencja.PROP_VERSION) == null ? 0 : entity.getInt(Absencja.PROP_VERSION));
 
         if (absencja.getId() == null) {
             em.persist(absencja);
