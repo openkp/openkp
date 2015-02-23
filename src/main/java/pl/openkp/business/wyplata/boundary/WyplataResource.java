@@ -28,13 +28,13 @@ import pl.openkp.business.wyplata.entity.Wyplata;
 @Stateless
 public class WyplataResource {
 
-	@Inject
-	KalkulatorWynagrodzen kalkulatorWynagrodzen;
-	
-	@GET
-	@Path("/{pracownikId:[0-9][0-9]*}/{rok:[0-9][0-9]*}/{miesiac:[0-9][0-9]*}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Wyplata oblicz(@PathParam("pracownikId") Long pracownikId, @PathParam("rok") Integer rok, @PathParam("miesiac") Integer miesiac) {
-		return kalkulatorWynagrodzen.oblicz(pracownikId, rok, miesiac);
-	}
+    @Inject
+    KalkulatorWynagrodzen kalkulatorWynagrodzen;
+
+    @GET
+    @Path("/{pracownikId:[0-9][0-9]*}/{rok:[0-9][0-9]*}/{miesiac:[0-9][0-9]*}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Wyplata oblicz(@PathParam("pracownikId") Long pracownikId, @PathParam("rok") Integer rok, @PathParam("miesiac") Integer miesiac) {
+        return kalkulatorWynagrodzen.oblicz(pracownikId, rok, miesiac);
+    }
 }

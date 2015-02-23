@@ -42,134 +42,132 @@ import pl.openkp.business.absencje.entity.Absencja;
 @XmlRootElement
 public class Pracownik implements Serializable {
 
-	private static final long serialVersionUID = -8032911264024186651L;
+    private static final long serialVersionUID = -8032911264024186651L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
-	@Version
-	@Column(name = "version")
-	private int version;
-	@NotNull(message = "Imię pracownika jest wymagane")
-	private String imie;
-	@NotNull(message = "Nazwisko pracownika jest wymagane")
-	private String nazwisko;
-	private String email;
-	private String telefon;
-	@NotNull(message = "Data zatrudnienia jest wymagana")
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATA_ZATRUDNIENIA")
-	private Date dataZatrudnienia;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATA_ZWOLNIENIA")
-	private Date dataZwolnienia;
-	@NotNull(message = "Wynagrodzenie jest wymagane")
-	@Min(value = 0, message = "Wynagrodzenie nie może być ujemne")
-	@Column(precision = 11, scale = 2)
-	private BigDecimal wynagrodzenie;
-	@Column(name = "KOSZT_PODWYZSZONY")
-	private boolean kosztPodwyzszony;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pracownik")
-	@XmlTransient
-	private List<Absencja> absencje;
-	
-	@PrePersist
-	@PreUpdate
-	private void preSave() {
-		if (dataZwolnienia == null) {
-			dataZwolnienia = new GregorianCalendar(9999, 11, 31).getTime();
-		}
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
+    @Version
+    @Column(name = "version")
+    private int version;
+    @NotNull(message = "Imię pracownika jest wymagane")
+    private String imie;
+    @NotNull(message = "Nazwisko pracownika jest wymagane")
+    private String nazwisko;
+    private String email;
+    private String telefon;
+    @NotNull(message = "Data zatrudnienia jest wymagana")
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATA_ZATRUDNIENIA")
+    private Date dataZatrudnienia;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "DATA_ZWOLNIENIA")
+    private Date dataZwolnienia;
+    @NotNull(message = "Wynagrodzenie jest wymagane")
+    @Min(value = 0, message = "Wynagrodzenie nie może być ujemne")
+    @Column(precision = 11, scale = 2)
+    private BigDecimal wynagrodzenie;
+    @Column(name = "KOSZT_PODWYZSZONY")
+    private boolean kosztPodwyzszony;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pracownik")
+    private List<Absencja> absencje;
 
-	public Long getId() {
-		return id;
-	}
+    @PrePersist
+    @PreUpdate
+    void preSave() {
+        if (dataZwolnienia == null) {
+            dataZwolnienia = new GregorianCalendar(9999, 11, 31).getTime();
+        }
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public int getVersion() {
-		return version;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public int getVersion() {
+        return version;
+    }
 
-	public String getImie() {
-		return imie;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	public void setImie(String imie) {
-		this.imie = imie;
-	}
+    public String getImie() {
+        return imie;
+    }
 
-	public String getNazwisko() {
-		return nazwisko;
-	}
+    public void setImie(String imie) {
+        this.imie = imie;
+    }
 
-	public void setNazwisko(String nazwisko) {
-		this.nazwisko = nazwisko;
-	}
+    public String getNazwisko() {
+        return nazwisko;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setNazwisko(String nazwisko) {
+        this.nazwisko = nazwisko;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getTelefon() {
-		return telefon;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setTelefon(String telefon) {
-		this.telefon = telefon;
-	}
+    public String getTelefon() {
+        return telefon;
+    }
 
-	public Date getDataZatrudnienia() {
-		return dataZatrudnienia;
-	}
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
 
-	public void setDataZatrudnienia(Date dataZatrudnienia) {
-		this.dataZatrudnienia = dataZatrudnienia;
-	}
+    public Date getDataZatrudnienia() {
+        return dataZatrudnienia;
+    }
 
-	public Date getDataZwolnienia() {
-		return dataZwolnienia;
-	}
+    public void setDataZatrudnienia(Date dataZatrudnienia) {
+        this.dataZatrudnienia = dataZatrudnienia;
+    }
 
-	public void setDataZwolnienia(Date dataZwolnienia) {
-		this.dataZwolnienia = dataZwolnienia;
-	}
+    public Date getDataZwolnienia() {
+        return dataZwolnienia;
+    }
 
-	public BigDecimal getWynagrodzenie() {
-		return wynagrodzenie;
-	}
+    public void setDataZwolnienia(Date dataZwolnienia) {
+        this.dataZwolnienia = dataZwolnienia;
+    }
 
-	public void setWynagrodzenie(BigDecimal wynagrodzenie) {
-		this.wynagrodzenie = wynagrodzenie;
-	}
+    public BigDecimal getWynagrodzenie() {
+        return wynagrodzenie;
+    }
 
-	public boolean isKosztPodwyzszony() {
-		return kosztPodwyzszony;
-	}
+    public void setWynagrodzenie(BigDecimal wynagrodzenie) {
+        this.wynagrodzenie = wynagrodzenie;
+    }
 
-	public void setKosztPodwyzszony(boolean kosztPodwyzszony) {
-		this.kosztPodwyzszony = kosztPodwyzszony;
-	}
+    public boolean isKosztPodwyzszony() {
+        return kosztPodwyzszony;
+    }
 
-	@XmlTransient
-	public List<Absencja> getAbsencje() {
-		return absencje;
-	}
+    public void setKosztPodwyzszony(boolean kosztPodwyzszony) {
+        this.kosztPodwyzszony = kosztPodwyzszony;
+    }
 
-	public void setAbsencje(List<Absencja> absencje) {
-		this.absencje = absencje;
-	}
-	
-	
+    @XmlTransient
+    public List<Absencja> getAbsencje() {
+        return absencje;
+    }
+
+    public void setAbsencje(List<Absencja> absencje) {
+        this.absencje = absencje;
+    }
+
 }
