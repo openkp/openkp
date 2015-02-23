@@ -16,6 +16,7 @@ package pl.openkp.business.pracownicy.boundary;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
@@ -93,7 +94,7 @@ public class PracownikResource {
         try {
             entity = findByIdQuery.getSingleResult();
         } catch (NoResultException nre) {
-            LOG.fine("Brak pracownika o id " + id);
+            LOG.log(Level.FINER, "Brak pracownika o id " + id, nre);
             entity = null;
         }
         if (entity == null) {
@@ -113,8 +114,7 @@ public class PracownikResource {
         if (maxResult != null) {
             findAllQuery.setMaxResults(maxResult);
         }
-        final List<Pracownik> results = findAllQuery.getResultList();
-        return results;
+        return findAllQuery.getResultList();
     }
 
     @GET
@@ -129,6 +129,7 @@ public class PracownikResource {
         try {
             entity = findByIdQuery.getSingleResult();
         } catch (NoResultException nre) {
+            LOG.log(Level.FINER, "Brak pracownika o id " + pracownikId, nre);
             entity = null;
         }
         if (entity == null) {
@@ -197,6 +198,7 @@ public class PracownikResource {
         try {
             em.merge(entity);
         } catch (OptimisticLockException e) {
+            LOG.log(Level.FINER, "Próba aktualizacji zmodyfikowanego rekordu", e);
             return Response.status(Response.Status.CONFLICT).entity(e.getEntity()).build();
         }
 
