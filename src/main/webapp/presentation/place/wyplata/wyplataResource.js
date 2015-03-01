@@ -1,5 +1,5 @@
 angular.module('openkp').factory('WyplataResource', [ '$resource', function($resource) {
-	return $resource('rest/pracownik/:pracownikId/wyplata/:miesiac/:rok', {
+	return $resource('rest/wyplata/:pracownikId/:rok/:miesiac', {
 		pracownikId : '@pracownikId',
 		miesiac : '@miesiac',
 		rok : '@rok'

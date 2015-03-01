@@ -28,64 +28,63 @@ import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import pl.openkp.testutils.ArchiveHelper;
+import pl.openkp.test.utils.ArchiveHelper;
 
 @RunWith(Arquillian.class)
 @RunAsClient
 public class PracownikTest {
 
-	@Deployment
-	public static WebArchive createTestArchive() {
-		return ArchiveHelper.fullApp();
-	}
+    @Deployment
+    public static WebArchive createTestArchive() {
+        return ArchiveHelper.fullApp();
+    }
 
-	@Drone
-	WebDriver browser;
+    @Drone
+    WebDriver browser;
 
-	@ArquillianResource
-	URL contextRoot;
+    @ArquillianResource
+    URL contextRoot;
 
-	@FindByNg(model = "pracownik.imie")
-	WebElement imie;
-	@FindByNg(model = "pracownik.nazwisko")
-	WebElement nazwisko;
-	@FindByNg(model = "pracownik.dataZatrudnienia")
-	WebElement dataZatrudnienia;
-	@FindByNg(model = "pracownik.wynagrodzenie")
-	WebElement wynagrodzenie;
-	@FindByNg(model = "pracownik.email")
-	WebElement email;
-	
+    @FindByNg(model = "pracownik.imie")
+    WebElement imie;
+    @FindByNg(model = "pracownik.nazwisko")
+    WebElement nazwisko;
+    @FindByNg(model = "pracownik.dataZatrudnienia")
+    WebElement dataZatrudnienia;
+    @FindByNg(model = "pracownik.wynagrodzenie")
+    WebElement wynagrodzenie;
+    @FindByNg(model = "pracownik.email")
+    WebElement email;
 
-	@FindByNg(action = "save()")
-	WebElement save;
-	@FindByNg(action = "remove()")
-	WebElement remove;
+    @FindByNg(action = "save()")
+    WebElement save;
+    @FindByNg(action = "remove()")
+    WebElement remove;
 
-	@Test
-	public void nowy() {
-		browser.navigate().to(contextRoot + "app.html#/pracownik/nowy");
-		imie.sendKeys("Jan");
-		nazwisko.sendKeys("Nowak");
-		dataZatrudnienia.sendKeys("2000-01-01");
-		wynagrodzenie.sendKeys("3000");
-		Assert.assertTrue(save.isEnabled());
-		save.click();
-		
-		Assert.assertEquals("Jan", imie.getAttribute("value"));
-		Assert.assertEquals("Nowak", nazwisko.getAttribute("value"));
-		Assert.assertEquals("2000-01-01", dataZatrudnienia.getAttribute("value"));
-		Assert.assertEquals("3000", wynagrodzenie.getAttribute("value"));
-		
-		email.sendKeys("test@gmail.com");
-		
-		save.click();
-		
-		Assert.assertEquals("test@gmail.com", email.getAttribute("value"));
-		
-		remove.click();
-		
-		Assert.assertEquals("http://127.0.0.1:8080/openkp/app.html#/pracownicy", browser.getCurrentUrl());
-	}
+    @Test
+    public void nowy() {
+        browser.navigate().to(contextRoot + "app.html#/pracownik/nowy");
+        imie.sendKeys("Jan");
+        nazwisko.sendKeys("Nowak");
+        dataZatrudnienia.sendKeys("2000-01-01");
+        wynagrodzenie.sendKeys("3000");
+        Assert.assertTrue(save.isEnabled());
+        save.click();
+
+        Assert.assertEquals("Jan", imie.getAttribute("value"));
+        Assert.assertEquals("Nowak", nazwisko.getAttribute("value"));
+        Assert.assertEquals("2000-01-01", dataZatrudnienia.getAttribute("value"));
+        Assert.assertEquals("3000", wynagrodzenie.getAttribute("value"));
+
+        email.sendKeys("test@gmail.com");
+
+        save.click();
+
+        Assert.assertEquals("test@gmail.com", email.getAttribute("value"));
+
+        remove.click();
+
+        Assert.assertEquals("http://127.0.0.1:8080/openkp/app.html#/pracownicy", browser.getCurrentUrl());
+    }
 
 }

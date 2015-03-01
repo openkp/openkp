@@ -22,16 +22,19 @@
 	</engine>
 
 	<container qualifier="wildfly" default="true">
-		<configuration>
-			<property name="jbossHome">E:/programowanie/wildfly-8.2.0.Final</property>
-			<property name="modulePath">E:/programowanie/wildfly-8.2.0.Final/modules</property>
-		</configuration>
+		<!-- By default, arquillian will use the JBOSS_HOME environment variable.  Alternatively, the configuration below can be uncommented. -->
+<!-- 		<configuration> -->
+<!-- 			<property name="jbossHome">E:/programowanie/wildfly-8.2.0.Final</property> -->
+<!-- 			<property name="modulePath">E:/programowanie/wildfly-8.2.0.Final/modules</property> -->
+<!-- 		</configuration> -->
 	</container>
 
 	<extension qualifier="webdriver">
-		<property name="browser">chrome</property>
-
-		<property name="chromeDriverBinary">e:\programowanie\chromedriver.exe</property>
+		<property name="browser">phantomjs</property>
+		
+<!--        <property name="browser">chrome</property> -->
+<!-- sciezka do drivera chrome lub można w linii polecen przekazac jako parametr -Dwebdriver.chrome.driver=e:\programowanie\chromedriver.exe -->
+<!-- 		<property name="chromeDriverBinary">e:\programowanie\chromedriver.exe</property> -->
 
 		<property name="loggingPrefs">driver=WARNING,profiler=WARNING</property>
 		<property name="javascriptEnabled">true</property>

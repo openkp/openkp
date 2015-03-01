@@ -4,11 +4,9 @@
 	<div class="col-md-6">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="box box-solid box-primary">
-					<div class="box-header">
-						<h3 class="box-title">Okres</h3>
-					</div>
-					<div class="box-body">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Okres</div>
+					<div class="panel-body">
 						<form class="form-inline">
 							<div class="form-group">
 								<select id="miesiac" name="miesiac" class="form-control" ng-model="miesiac" ng-options="t for t in miesiace">
@@ -23,11 +21,9 @@
 				</div>
 			</div>
 			<div class="col-md-12">
-				<div class="box box-solid box-primary">
-					<div class="box-header">
-						<h3 class="box-title">Pracownik</h3>
-					</div>
-					<div class="box-body">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Pracownik</div>
+					<div class="panel-body">
 						<div id="gridPracownicy" ui-grid-resize-columns ui-grid-selection ui-grid="gridOptions"></div>
 					</div>
 				</div>
@@ -35,11 +31,9 @@
 		</div>
 	</div>
 	<div class="col-md-6">
-		<div class="box box-solid box-primary">
-			<div class="box-header">
-				<h3 class="box-title">Wynagrodzenie</h3>
-			</div>
-			<div class="box-body">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Wynagrodzenie</div>
+			<div class="panel-body">
 				<form id="wyplataForm" name="wyplataForm" class="form-horizontal" role="form">
 					<div class="form-group">
 						<label for="wynagrodzenieZasadnicze" class="col-lg-4 control-label">Wynagrodzenie zasadnicze</label>
@@ -51,25 +45,29 @@
 					<div class="form-group">
 						<label for="rentowe" class="col-lg-4 control-label">Rentowe</label>
 						<div id="rentoweControls" class="col-lg-5">
-							<input id="rentowe" name="rentowe" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaRentowaPracownika" />
+							<input id="rentowe" name="rentowe" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.skladkaRentowaPracownika" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="emerytalne" class="col-lg-4 control-label">Emerytalne</label>
 						<div id="emerytalneControls" class="col-lg-5">
-							<input id="emerytalne" name="emerytalne" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaEmerytalnaPracownika" />
+							<input id="emerytalne" name="emerytalne" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.skladkaEmerytalnaPracownika" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="chorobowe" class="col-lg-4 control-label">Chorobowe</label>
 						<div id="choroboweControls" class="col-lg-5">
-							<input id="chorobowe" name="chorobowe" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.skladkaChorobowaPracownika" />
+							<input id="chorobowe" name="chorobowe" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.skladkaChorobowaPracownika" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="sumaSkladek" class="col-lg-4 control-label">Suma składek</label>
 						<div id="sumaSkladekControls" class="col-lg-5">
-							<input id="sumaSkladek" name="sumaSkladek" type="text" style="font-weight: bolder;" class="form-control" readonly ng-model="wyplata.sumaSkladek" />
+							<input id="sumaSkladek" name="sumaSkladek" type="text" style="font-weight: bolder;" class="form-control" readonly
+								ng-model="wyplata.sumaSkladek" />
 						</div>
 					</div>
 					<div class="form-group">

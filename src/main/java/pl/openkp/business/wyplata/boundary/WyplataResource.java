@@ -24,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 import pl.openkp.business.wyplata.control.KalkulatorWynagrodzen;
 import pl.openkp.business.wyplata.entity.Wyplata;
 
-@Path("/wyplaty")
+@Path("/wyplata")
 @Stateless
 public class WyplataResource {
 
