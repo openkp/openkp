@@ -22,8 +22,8 @@ import javax.persistence.PersistenceContext;
 
 public class Resources {
 
-	@Produces
-	@PersistenceContext(unitName = "openkp-persistence-unit")
+    @Produces
+    @PersistenceContext(unitName = "openkp-persistence-unit")
     private EntityManager em;
 
     @Produces

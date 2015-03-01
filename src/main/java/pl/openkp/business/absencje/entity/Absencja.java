@@ -13,105 +13,107 @@
  */
 package pl.openkp.business.absencje.entity;
 
-import javax.persistence.Entity;
-
 import java.io.Serializable;
-
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Column;
-import javax.persistence.Version;
-
-import java.lang.Override;
 import java.util.Calendar;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
-import javax.persistence.Enumerated;
-
-import pl.openkp.business.absencje.entity.TypAbsencji;
-import pl.openkp.business.pracownicy.entity.Pracownik;
-
-import javax.persistence.EnumType;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+import pl.openkp.business.pracownicy.entity.Pracownik;
 
 @Entity
 @XmlRootElement
 public class Absencja implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
+    private static final long serialVersionUID = 2537398382916609462L;
 
-	@Version
-	@Column(name = "version")
-	private int version;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Long id;
+    public static final String PROP_ID = "id";
 
-	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Calendar dataOd;
+    @Version
+    @Column(name = "version")
+    private int version;
+    public static final String PROP_VERSION = "version";
 
-	@Column(nullable = false)
-	@Temporal(TemporalType.DATE)
-	private Calendar dataDo;
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar dataOd;
+    public static final String PROP_DATA_OD = "dataOd";
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@XmlTransient
-	private Pracownik pracownik;
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Calendar dataDo;
+    public static final String PROP_DATA_DO = "dataDo";
 
-	@Enumerated(EnumType.STRING)
-	private TypAbsencji typAbsencji;
-	
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @XmlTransient
+    private Pracownik pracownik;
+    public static final String PROP_PRACOWNIK = "pracownik";
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Enumerated(EnumType.STRING)
+    private TypAbsencji typAbsencji;
+    public static final String PROP_TYP_ABSENCJI = "typAbsencji";
 
-	public int getVersion() {
-		return version;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Calendar getDataOd() {
-		return dataOd;
-	}
+    public int getVersion() {
+        return version;
+    }
 
-	public void setDataOd(Calendar dataOd) {
-		this.dataOd = dataOd;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	public Calendar getDataDo() {
-		return dataDo;
-	}
+    public Calendar getDataOd() {
+        return dataOd;
+    }
 
-	public void setDataDo(Calendar dataDo) {
-		this.dataDo = dataDo;
-	}
+    public void setDataOd(Calendar dataOd) {
+        this.dataOd = dataOd;
+    }
 
-	public Pracownik getPracownik() {
-		return pracownik;
-	}
+    public Calendar getDataDo() {
+        return dataDo;
+    }
 
-	public void setPracownik(Pracownik pracownik) {
-		this.pracownik = pracownik;
-	}
+    public void setDataDo(Calendar dataDo) {
+        this.dataDo = dataDo;
+    }
 
-	public TypAbsencji getTypAbsencji() {
-		return typAbsencji;
-	}
+    public Pracownik getPracownik() {
+        return pracownik;
+    }
 
-	public void setTypAbsencji(TypAbsencji typAbsencji) {
-		this.typAbsencji = typAbsencji;
-	}
+    public void setPracownik(Pracownik pracownik) {
+        this.pracownik = pracownik;
+    }
+
+    public TypAbsencji getTypAbsencji() {
+        return typAbsencji;
+    }
+
+    public void setTypAbsencji(TypAbsencji typAbsencji) {
+        this.typAbsencji = typAbsencji;
+    }
 }
