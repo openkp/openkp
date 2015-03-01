@@ -25,6 +25,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -38,11 +40,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import pl.openkp.business.absencje.entity.Absencja;
 
+@NamedQueries({ @NamedQuery(name = "Pracownik.PRACOWNICY", query = "SELECT DISTINCT p FROM Pracownik p LEFT JOIN FETCH p.absencje ORDER BY p.id") })
 @Entity
 @XmlRootElement
 public class Pracownik implements Serializable {
 
     private static final long serialVersionUID = -8032911264024186651L;
+
+    public static final String PRACOWNICY = "Pracownik.PRACOWNICY";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

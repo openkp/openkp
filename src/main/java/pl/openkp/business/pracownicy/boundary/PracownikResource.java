@@ -13,21 +13,13 @@
  */
 package pl.openkp.business.pracownicy.boundary;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -44,15 +36,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import pl.openkp.business.absencje.entity.Absencja;
-import pl.openkp.business.absencje.entity.TypAbsencji;
 import pl.openkp.business.pracownicy.entity.Pracownik;
-import pl.openkp.business.wyplata.control.KalkulatorWynagrodzen;
-import pl.openkp.business.wyplata.entity.Wyplata;
 
-/**
- * 
- */
 @Stateless
 @Path("/pracownik")
 public class PracownikResource {
@@ -62,19 +47,16 @@ public class PracownikResource {
     @PersistenceContext(unitName = "openkp-persistence-unit")
     private EntityManager em;
 
-    @Inject
-    private KalkulatorWynagrodzen kalkulatorWynagrodzen;
-
     @POST
     @Consumes("application/json")
-    public Response create(Pracownik entity) {
+    public Response nowy(Pracownik entity) {
         em.persist(entity);
         return Response.created(UriBuilder.fromResource(PracownikResource.class).path(String.valueOf(entity.getId())).build()).build();
     }
 
     @DELETE
     @Path("/{id:[0-9][0-9]*}")
-    public Response deleteById(@PathParam("id") Long id) {
+    public Response usun(@PathParam("id") Long id) {
         Pracownik entity = em.find(Pracownik.class, id);
         if (entity == null) {
             return Response.status(Status.NOT_FOUND).build();
@@ -86,28 +68,18 @@ public class PracownikResource {
     @GET
     @Path("/{id:[0-9][0-9]*}")
     @Produces("application/json")
-    public Response findById(@PathParam("id") Long id) {
-        TypedQuery<Pracownik> findByIdQuery = em.createQuery("SELECT DISTINCT p FROM Pracownik p WHERE p.id = :entityId ORDER BY p.id",
-                Pracownik.class);
-        findByIdQuery.setParameter("entityId", id);
-        Pracownik entity;
-        try {
-            entity = findByIdQuery.getSingleResult();
-        } catch (NoResultException nre) {
-            LOG.log(Level.FINER, "Brak pracownika o id " + id, nre);
-            entity = null;
-        }
-        if (entity == null) {
+    public Response pracownik(@PathParam("id") Long id) {
+        Pracownik pracownik = znajdz(id);
+        if (pracownik == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
-        return Response.ok(entity).build();
+        return Response.ok(pracownik).build();
     }
 
     @GET
     @Produces("application/json")
-    public List<Pracownik> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
-        TypedQuery<Pracownik> findAllQuery = em.createQuery("SELECT DISTINCT p FROM Pracownik p LEFT JOIN FETCH p.absencje ORDER BY p.id",
-                Pracownik.class);
+    public List<Pracownik> pracownicy(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
+        TypedQuery<Pracownik> findAllQuery = em.createNamedQuery(Pracownik.PRACOWNICY, Pracownik.class);
         if (startPosition != null) {
             findAllQuery.setFirstResult(startPosition);
         }
@@ -117,84 +89,10 @@ public class PracownikResource {
         return findAllQuery.getResultList();
     }
 
-    @GET
-    @Path("/{pracownikId:[0-9][0-9]*}/absencja{p:/?}{absencjaId:([0-9]*)}")
-    @Produces("application/json")
-    public JsonArray absencje(@PathParam("pracownikId") Long pracownikId, @PathParam("absencjaId") String absencjaId) {
-        TypedQuery<Pracownik> findByIdQuery = em.createQuery(
-                "SELECT DISTINCT p FROM Pracownik p LEFT JOIN FETCH p.absencje WHERE p.id = :entityId ORDER BY p.id", Pracownik.class);
-        findByIdQuery.setParameter("entityId", pracownikId);
-        Pracownik entity;
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        try {
-            entity = findByIdQuery.getSingleResult();
-        } catch (NoResultException nre) {
-            LOG.log(Level.FINER, "Brak pracownika o id " + pracownikId, nre);
-            entity = null;
-        }
-        if (entity == null) {
-            return builder.build();
-        }
-
-        for (Absencja absencja : entity.getAbsencje()) {
-            builder.add(buildAbsencja(absencja));
-        }
-        return builder.build();
-    }
-
-    private JsonObjectBuilder buildAbsencja(Absencja absencja) {
-        Calendar cal = (Calendar) absencja.getDataDo().clone();
-        if (!absencja.getDataOd().equals(absencja.getDataDo())) {
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        return Json.createObjectBuilder().add("id", absencja.getId()).add("title", absencja.getTypAbsencji().getOpis())
-                .add("start", javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataOd()))
-                .add("end", javax.xml.bind.DatatypeConverter.printDateTime(cal))
-                .add(Absencja.PROP_DATA_OD, javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataOd()))
-                .add(Absencja.PROP_DATA_DO, javax.xml.bind.DatatypeConverter.printDateTime(absencja.getDataDo())).add("allDay", true)
-                .add(Absencja.PROP_VERSION, absencja.getVersion());
-    }
-
-    @DELETE
-    @Path("/{pracownikId:[0-9][0-9]*}/absencja{p:/?}{absencjaId:([0-9]*)}")
-    @Produces("application/json")
-    public JsonObject usunAbsencje(@PathParam("pracownikId") Long pracownikId, @PathParam("absencjaId") String absencjaId) {
-        em.remove(em.find(Absencja.class, Long.parseLong(absencjaId)));
-        return Json.createObjectBuilder().add(Absencja.PROP_ID, absencjaId).build();
-    }
-
-    @POST
-    @Path("/{pracownikId:[0-9][0-9]*}/absencja")
-    @Produces("application/json")
-    public JsonObject zapiszAbsencje(@PathParam("pracownikId") Long pracownikId, JsonObject entity) {
-        Absencja absencja = new Absencja();
-        absencja.setDataOd(new GregorianCalendar(entity.getInt("rokOd"), entity.getInt("miesiacOd"), entity.getInt("dzienOd")));
-        absencja.setDataDo(new GregorianCalendar(entity.getInt("rokDo"), entity.getInt("miesiacDo"), entity.getInt("dzienDo")));
-        absencja.setPracownik(em.getReference(Pracownik.class, pracownikId));
-        absencja.setTypAbsencji(TypAbsencji.fromOpis(entity.getString("title")));
-        absencja.setId(asLong(entity.get(Absencja.PROP_ID) == null ? null : entity.get(Absencja.PROP_ID).toString()));
-        absencja.setVersion(entity.get(Absencja.PROP_VERSION) == null ? 0 : entity.getInt(Absencja.PROP_VERSION));
-
-        if (absencja.getId() == null) {
-            em.persist(absencja);
-        } else {
-            absencja = em.merge(absencja);
-        }
-        em.flush();
-        return buildAbsencja(absencja).build();
-    }
-
-    private Long asLong(String string) {
-        if (string == null || string.trim().isEmpty()) {
-            return null;
-        }
-        return Long.parseLong(string);
-    }
-
     @PUT
     @Path("/{id:[0-9][0-9]*}")
     @Consumes("application/json")
-    public Response update(Pracownik entity) {
+    public Response aktualizuj(Pracownik entity) {
         try {
             em.merge(entity);
         } catch (OptimisticLockException e) {
@@ -205,10 +103,14 @@ public class PracownikResource {
         return Response.noContent().build();
     }
 
-    @GET
-    @Path("/{pracownikId:[0-9][0-9]*}/wyplata/{miesiac:[0-9][0-9]*}/{rok:[0-9][0-9]*}")
-    @Produces("application/json")
-    public Wyplata wyplata(@PathParam("pracownikId") long pracownikId, @PathParam("miesiac") int miesiac, @PathParam("rok") int rok) {
-        return kalkulatorWynagrodzen.oblicz(pracownikId, rok, miesiac);
+    private Pracownik znajdz(Long id) {
+        Pracownik pracownik = null;
+        try {
+            pracownik = em.find(Pracownik.class, id);
+        } catch (EntityNotFoundException ex) {
+            LOG.log(Level.FINER, "Brak pracownika o id " + id, ex);
+            pracownik = null;
+        }
+        return pracownik;
     }
 }

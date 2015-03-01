@@ -14,7 +14,7 @@
 package pl.openkp.business.absencje.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,12 +52,12 @@ public class Absencja implements Serializable {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar dataOd;
+    private Date dataOd;
     public static final String PROP_DATA_OD = "dataOd";
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar dataDo;
+    private Date dataDo;
     public static final String PROP_DATA_DO = "dataDo";
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -85,19 +85,19 @@ public class Absencja implements Serializable {
         this.version = version;
     }
 
-    public Calendar getDataOd() {
+    public Date getDataOd() {
         return dataOd;
     }
 
-    public void setDataOd(Calendar dataOd) {
+    public void setDataOd(Date dataOd) {
         this.dataOd = dataOd;
     }
 
-    public Calendar getDataDo() {
+    public Date getDataDo() {
         return dataDo;
     }
 
-    public void setDataDo(Calendar dataDo) {
+    public void setDataDo(Date dataDo) {
         this.dataDo = dataDo;
     }
 
