@@ -10,3 +10,4 @@ MANIFEST.MF
 *.iml
 *.idea
 local-stage
+/phantomjsdriver.log
