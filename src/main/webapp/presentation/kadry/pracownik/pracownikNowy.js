@@ -25,10 +25,12 @@ angular.module('openkp.pracownikNowy', [ 'ngRoute' ]).config([ '$routeProvider',
 		var successCallback = function(data, responseHeaders) {
 			var id = locationParser(responseHeaders);
 			$location.path('/pracownik/edycja/' + id);
-			$scope.displayError = false;
+			$scope.bledyWalidacji = null;
 		};
-		var errorCallback = function() {
-			$scope.displayError = true;
+		var errorCallback = function(resp) {
+			if (resp.headers('validation-exception') == 'true') {
+				$scope.bledyWalidacji = resp.data;
+			}
 		};
 		PracownikResource.save($scope.pracownik, successCallback, errorCallback);
 	};

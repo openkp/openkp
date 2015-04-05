@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import pl.openkp.business.absencje.entity.Absencja;
+import pl.openkp.business.walidacja.Email;
 
 @NamedQueries({ @NamedQuery(name = "Pracownik.PRACOWNICY", query = "SELECT DISTINCT p FROM Pracownik p LEFT JOIN FETCH p.absencje ORDER BY p.id") })
 @Entity
@@ -60,6 +61,7 @@ public class Pracownik implements Serializable {
     private String imie;
     @NotNull(message = "Nazwisko pracownika jest wymagane")
     private String nazwisko;
+    @Email(message = "Niepoprawny adres email")
     private String email;
     private String telefon;
     @NotNull(message = "Data zatrudnienia jest wymagana")

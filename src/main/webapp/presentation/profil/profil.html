@@ -1,0 +1,83 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>
+		Ogólne ustawienia konta <small>{{kontekstAplikacji.uzytkownik.nazwa}}</small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+		<li class="active">Here</li>
+	</ol>
+</section>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<!-- left column -->
+		<div class="col-md-4 col-sm-6 col-xs-12">
+			<div class="text-center">
+				<img ng-src="{{imageSource}}" class="avatar img-circle img-thumbnail" alt="avatar">
+				<h6>Zmień zdjęcie...</h6>
+				<input type="file" file-upload multiple class="text-center center-block well well-sm">
+			</div>
+		</div>
+		<!-- edit form column -->
+		<div class="col-md-8 col-sm-6 col-xs-12">
+			<h3>Informacje podstawowe</h3>
+			<form id="profilForm" name="profilForm" class="form-horizontal" role="form">
+				<div class="form-group" ng-class="{'has-error': profilForm.imie.$invalid}">
+					<label for="imie" class="col-lg-3 control-label">Imię:</label>
+					<div class="col-lg-8">
+						<input id="imie" name="imie" ng-model="uzytkownik.imie" class="form-control" type="text" placeholder="Wprowadź imię" required ng-maxlength="100">
+						<span class="help-block error" ng-show="profilForm.imie.$error.required">Pole nie może być puste</span>
+						<span class="help-block error" ng-show="profilForm.imie.$error.maxlength">Została przekroczona maksymalna ilość znaków</span>  
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': profilForm.nazwisko.$invalid}">
+					<label for="nazwisko" class="col-lg-3 control-label">Nazwisko:</label>
+					<div class="col-lg-8">
+						<input id="nazwisko" name="nazwisko" ng-model="uzytkownik.nazwisko" class="form-control" type="text" placeholder="Wprowadź nazwisko"  required ng-maxlength="100">
+						<span class="help-block error" ng-show="profilForm.nazwisko.$error.required">Pole nie może być puste</span>
+						<span class="help-block error" ng-show="profilForm.nazwisko.$error.maxlength">Została przekroczona maksymalna ilość znaków</span>  
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': profilForm.email.$invalid}">
+					<label for="email" class="col-lg-3 control-label">Email:</label>
+					<div class="col-lg-8">
+						<input id="email" name="email" ng-model="uzytkownik.email" class="form-control" type="email" placeholder="Wprowadź email" ng-maxlength="100">
+						<span class="help-block error" ng-show="profilForm.email.$error.email">Niepoprawny adres e-mail</span>
+						<span class="help-block error" ng-show="profilForm.email.$error.maxlength">Została przekroczona maksymalna ilość znaków</span>    
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': profilForm.login.$invalid}">
+					<label for="login" class="col-lg-3 control-label">Login:</label>
+					<div class="col-lg-8">
+						<input id="login" name="login" ng-model="uzytkownik.login" class="form-control" type="text" placeholder="Wprowadź login" required>
+						<span class="help-block error" ng-show="profilForm.nazwisko.$error.required">Pole nie może być puste</span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': profilForm.haslo.$invalid}">
+					<label for="haslo" class="col-lg-3 control-label">Hasło:</label>
+					<div class="col-lg-8">
+						<input id="haslo" name="haslo" ng-model="uzytkownik.haslo" class="form-control" type="password" placeholder="Wprowadź hasło" required>
+						<span class="help-block error" ng-show="profilForm.haslo.$error.required">Pole nie może być puste</span>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{'has-error': profilForm.powtorzHaslo.$invalid}">
+					<label for="powtorzHaslo" class="col-lg-3 control-label">Powtórz hasło:</label>
+					<div class="col-lg-8">
+						<input id="powtorzHaslo" name="powtorzHaslo" class="form-control" type="password" placeholder="Powtórz hasło" ng-model="powtorzHaslo"
+							ui-validate=" '$value==uzytkownik.haslo' " ui-validate-watch=" 'uzytkownik.haslo' " required>
+						<span class="help-block error" ng-show='profilForm.powtorzHaslo.$error.validator'>Wprowadzone hasła nie są zgodne</span>
+						<span class="help-block error" ng-show="profilForm.powtorzHaslo.$error.required">Pole nie może być puste</span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-md-offset-3 col-md-8">
+						<input class="btn btn-primary" value="Zapisz" type="button" ng-disabled="isClean() || profilForm.$invalid" ng-click="save()"> <span></span> <input class="btn btn-default" value="Anuluj" type="reset">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+<!-- /.content -->

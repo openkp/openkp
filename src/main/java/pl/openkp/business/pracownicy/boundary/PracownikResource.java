@@ -23,6 +23,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,6 +33,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
@@ -48,8 +50,9 @@ public class PracownikResource {
     private EntityManager em;
 
     @POST
-    @Consumes("application/json")
-    public Response nowy(Pracownik entity) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    // @Interceptors({ ZapiszPracownikaWalidator.class })
+    public Response nowy(@Valid Pracownik entity) {
         em.persist(entity);
         return Response.created(UriBuilder.fromResource(PracownikResource.class).path(String.valueOf(entity.getId())).build()).build();
     }
@@ -67,7 +70,7 @@ public class PracownikResource {
 
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response pracownik(@PathParam("id") Long id) {
         Pracownik pracownik = znajdz(id);
         if (pracownik == null) {
@@ -77,7 +80,7 @@ public class PracownikResource {
     }
 
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Pracownik> pracownicy(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
         TypedQuery<Pracownik> findAllQuery = em.createNamedQuery(Pracownik.PRACOWNICY, Pracownik.class);
         if (startPosition != null) {
@@ -91,7 +94,7 @@ public class PracownikResource {
 
     @PUT
     @Path("/{id:[0-9][0-9]*}")
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response aktualizuj(Pracownik entity) {
         try {
             em.merge(entity);
