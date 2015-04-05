@@ -1,93 +1,103 @@
-<h3>Kalendarz absencji</h3>
-<!-- START lista pracowników -->
-<div class="row">
-	<div class="col-md-12">
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">Pracownicy</h3>
-			</div>
-			<div class="panel-body">
-				<div id="grid" ui-grid-selection ui-grid="gridOptions"></div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- END lista pracowników -->
-
-<!-- START row-->
-<div class="row">
-	<div class="col-md-3">
-		<!-- START panel-->
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">Absencja</h3>
-			</div>
-			<div class="panel-body">
-				<form class="form-horizontal">
-					<div class="form-group">
-						<label for="dataOd" class="col-lg-2 control-label">Od</label>
-						<div id="dataOdControls" class="col-lg-10">
-							<p class="input-group">
-								<input id="dataOd" name="dataOd" ng-model="wybranaAbsencja.dataOd" is-open="openedOd" ng-required="true" datepicker-options="dateOptions" placeholder="Wybierz początek absencji"
-								    type="text" class="form-control" datepicker-popup="dd.MM.yyyy" data-inputmask="'alias': 'dd.mm.yyyy'" data-mask ui-date-format 
-									close-text="Zamknij" current-text="Dziś" clear-text="Wyczyść"/> <span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="openOd($event)">
-										<i class="glyphicon glyphicon-calendar"></i>
-									</button>
-								</span>
-							</p>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="dataDo" class="col-lg-2 control-label">Do</label>
-						<div id="dataDoControls" class="col-lg-10">
-							<p class="input-group">
-								<input id="dataDo" name="dataDo" ng-model="wybranaAbsencja.dataDo" is-open="openedDo" ng-required="true" datepicker-options="dateOptions" placeholder="Wybierz koniec absencji"
-								    type="text" class="form-control" datepicker-popup="dd.MM.yyyy" data-inputmask="'alias': 'dd.mm.yyyy'" data-mask ui-date-format 
-									close-text="Zamknij" current-text="Dziś" clear-text="Wyczyść"/> <span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="openDo($event)">
-										<i class="glyphicon glyphicon-calendar"></i>
-									</button>
-								</span>
-							</p>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="typAbsencji" class="col-lg-2 control-label">Typ</label>
-						<div id="typAbsencjiControls" class="col-lg-10">
-							<select id="typAbsencji" name="typAbsencji" class="form-control" ng-model="wybranaAbsencja.title" ng-options="t for t in typAbsencjiList">
-								<option value="">Wybierz typ absencji</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button id="saveAbsencja" name="saveAbsencja" class="btn btn-primary" ng-disabled="isClean() || AbsencjaForm.$invalid" ng-click="save()">
-								<span class="glyphicon glyphicon-ok-sign"></span> Zapisz
-							</button>
-							<button id="newAbsencja" name="newAbsencja" class="btn btn-primary" ng-show="wybranaAbsencja.id" ng-disabled="isClean() || AbsencjaForm.$invalid" ng-click="nowaAbsencja()">
-								<span class="glyphicon glyphicon-ok-sign"></span> Nowa
-							</button>
-							<button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()">
-								<span class="glyphicon glyphicon-remove-sign"></span> Anuluj
-							</button>
-							<button id="deleteAbsencja" name="deleteAbsencja" class="btn btn-danger" ng-show="wybranaAbsencja.id" ng-click="remove()">
-								<span class="glyphicon glyphicon-trash"></span> Usuń
-							</button>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		<!-- END panel-->
-	</div>
-	
-	<div class="col-md-9">
-		<div class="panel">
-			<div class="panel-body">
-				<div id="calendar" class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+	<h1>Kalendarz absencji</h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+		<li class="active">Here</li>
+	</ol>
+</section>
+<!-- Main content -->
+<section class="content">
+	<!-- START lista pracowników -->
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Pracownicy</h3>
+				</div>
+				<div class="panel-body">
+					<div id="grid" ui-grid-selection ui-grid="gridOptions"></div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!-- END row-->
+	<!-- END lista pracowników -->
+	<!-- START row-->
+	<div class="row">
+		<div class="col-md-3">
+			<!-- START panel-->
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Absencja</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="dataOd" class="col-lg-2 control-label">Od</label>
+							<div id="dataOdControls" class="col-lg-10">
+								<p class="input-group">
+									<input id="dataOd" name="dataOd" ng-model="wybranaAbsencja.dataOd" is-open="openedOd" ng-required="true" datepicker-options="dateOptions"
+										placeholder="Wybierz początek absencji" type="text" class="form-control" datepicker-popup="dd.MM.yyyy"
+										data-inputmask="'alias': 'dd.mm.yyyy'" data-mask ui-date-format close-text="Zamknij" current-text="Dziś" clear-text="Wyczyść" /> <span
+										class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openOd($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dataDo" class="col-lg-2 control-label">Do</label>
+							<div id="dataDoControls" class="col-lg-10">
+								<p class="input-group">
+									<input id="dataDo" name="dataDo" ng-model="wybranaAbsencja.dataDo" is-open="openedDo" ng-required="true" datepicker-options="dateOptions"
+										placeholder="Wybierz koniec absencji" type="text" class="form-control" datepicker-popup="dd.MM.yyyy" data-inputmask="'alias': 'dd.mm.yyyy'"
+										data-mask ui-date-format close-text="Zamknij" current-text="Dziś" clear-text="Wyczyść" /> <span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDo($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="typAbsencji" class="col-lg-2 control-label">Typ</label>
+							<div id="typAbsencjiControls" class="col-lg-10">
+								<select id="typAbsencji" name="typAbsencji" class="form-control" ng-model="wybranaAbsencja.title" ng-options="t for t in typAbsencjiList">
+									<option value="">Wybierz typ absencji</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<button id="saveAbsencja" name="saveAbsencja" class="btn btn-primary" ng-disabled="isClean() || AbsencjaForm.$invalid" ng-click="save()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Zapisz
+								</button>
+								<button id="newAbsencja" name="newAbsencja" class="btn btn-primary" ng-show="wybranaAbsencja.id"
+									ng-disabled="isClean() || AbsencjaForm.$invalid" ng-click="nowaAbsencja()">
+									<span class="glyphicon glyphicon-ok-sign"></span> Nowa
+								</button>
+								<button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()">
+									<span class="glyphicon glyphicon-remove-sign"></span> Anuluj
+								</button>
+								<button id="deleteAbsencja" name="deleteAbsencja" class="btn btn-danger" ng-show="wybranaAbsencja.id" ng-click="remove()">
+									<span class="glyphicon glyphicon-trash"></span> Usuń
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- END panel-->
+		</div>
+		<div class="col-md-9">
+			<div class="panel">
+				<div class="panel-body">
+					<div id="calendar" class="calendar" ng-model="eventSources" calendar="myCalendar1" ui-calendar="uiConfig.calendar"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END row-->
+</section>

@@ -28,10 +28,11 @@ angular.module('openkp.pracownikEdycja', [ 'ngRoute' ]).config([ '$routeProvider
     $scope.save = function() {
         var successCallback = function(){
             $scope.get();
-            $scope.displayError = false;
         };
-        var errorCallback = function() {
-            $scope.displayError=true;
+        var errorCallback = function(resp) {
+        	if (resp.status == 400) {
+				$scope.bledyWalidacji = resp.data;
+			}
         };
         $scope.pracownik.$update(successCallback, errorCallback);
     };

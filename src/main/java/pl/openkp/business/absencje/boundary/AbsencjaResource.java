@@ -32,6 +32,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import pl.openkp.business.absencje.entity.Absencja;
 import pl.openkp.business.absencje.entity.TypAbsencji;
@@ -48,7 +49,7 @@ public class AbsencjaResource {
 
     @GET
     @Path("/{pracownikId:[0-9][0-9]*}/absencja{p:/?}{absencjaId:([0-9]*)}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public JsonArray absencje(@PathParam("pracownikId") Long pracownikId, @PathParam("absencjaId") String absencjaId) {
         Pracownik entity = em.find(Pracownik.class, pracownikId);
         JsonArrayBuilder builder = Json.createArrayBuilder();
@@ -64,7 +65,7 @@ public class AbsencjaResource {
 
     @DELETE
     @Path("/{pracownikId:[0-9][0-9]*}/absencja{p:/?}{absencjaId:([0-9]*)}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public JsonObject usun(@PathParam("pracownikId") Long pracownikId, @PathParam("absencjaId") String absencjaId) {
         em.remove(em.find(Absencja.class, Long.parseLong(absencjaId)));
         return Json.createObjectBuilder().add(Absencja.PROP_ID, absencjaId).build();
@@ -72,7 +73,7 @@ public class AbsencjaResource {
 
     @POST
     @Path("/{pracownikId:[0-9][0-9]*}/absencja")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public JsonObject zapisz(@PathParam("pracownikId") Long pracownikId, JsonObject entity) {
         Absencja absencja = new Absencja();
         absencja.setDataOd(new GregorianCalendar(entity.getInt("rokOd"), entity.getInt("miesiacOd"), entity.getInt("dzienOd")).getTime());

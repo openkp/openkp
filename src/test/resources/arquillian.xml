@@ -33,7 +33,7 @@
 		<property name="browser">phantomjs</property>
 		
 <!--        <property name="browser">chrome</property> -->
-<!-- sciezka do drivera chrome lub można w linii polecen przekazac jako parametr -Dwebdriver.chrome.driver=e:\programowanie\chromedriver.exe -->
+<!-- sciezka do drivera chrome lub mozna w linii polecen przekazac jako parametr -Dwebdriver.chrome.driver=e:\programowanie\chromedriver.exe -->
 <!-- 		<property name="chromeDriverBinary">e:\programowanie\chromedriver.exe</property> -->
 
 		<property name="loggingPrefs">driver=WARNING,profiler=WARNING</property>

@@ -15,6 +15,9 @@ package pl.openkp.business.wyplata.boundary;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -34,7 +37,10 @@ public class WyplataResource {
     @GET
     @Path("/{pracownikId:[0-9][0-9]*}/{rok:[0-9][0-9]*}/{miesiac:[0-9][0-9]*}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Wyplata oblicz(@PathParam("pracownikId") Long pracownikId, @PathParam("rok") Integer rok, @PathParam("miesiac") Integer miesiac) {
+    public Wyplata oblicz(
+            @PathParam("pracownikId") Long pracownikId,
+            @PathParam("rok") Integer rok,
+            @Valid @PathParam("miesiac") @Min(value = 0, message = "Minimalna wartość dla miesiąca to 0") @Max(value = 11, message = "Maksymalna wartość dla miesiąca to 11") Integer miesiac) {
         return kalkulatorWynagrodzen.oblicz(pracownikId, rok, miesiac);
     }
 }

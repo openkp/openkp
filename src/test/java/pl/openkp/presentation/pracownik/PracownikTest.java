@@ -66,14 +66,14 @@ public class PracownikTest {
         browser.navigate().to(contextRoot + "app.html#/pracownik/nowy");
         imie.sendKeys("Jan");
         nazwisko.sendKeys("Nowak");
-        dataZatrudnienia.sendKeys("2000-01-01");
+        dataZatrudnienia.sendKeys("01.01.2000");
         wynagrodzenie.sendKeys("3000");
         Assert.assertTrue(save.isEnabled());
         save.click();
 
         Assert.assertEquals("Jan", imie.getAttribute("value"));
         Assert.assertEquals("Nowak", nazwisko.getAttribute("value"));
-        Assert.assertEquals("2000-01-01", dataZatrudnienia.getAttribute("value"));
+        Assert.assertEquals("01.01.2000", dataZatrudnienia.getAttribute("value"));
         Assert.assertEquals("3000", wynagrodzenie.getAttribute("value"));
 
         email.sendKeys("test@gmail.com");

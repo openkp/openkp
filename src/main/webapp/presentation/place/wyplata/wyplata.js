@@ -32,18 +32,25 @@ angular.module('openkp.wyplata', ['ngRoute']).config(['$routeProvider', function
         };
 
         $scope.oblicz = function () {
-
+        	var successCallback = function(data, responseHeaders) { 
+        		$scope.bledyWalidacji = null;
+    		};
+    		var errorCallback = function(resp) {
+    			if (resp.status == 400) {
+    				$scope.bledyWalidacji = resp.data;
+    			}
+    		};
             $scope.wyplata = WyplataResource.get({
                 pracownikId: $scope.gridApi.selection.getSelectedRows()[0].id,
                 miesiac: $scope.miesiace.indexOf($scope.miesiac),
                 rok: $scope.rok
-            });
+            }, successCallback, errorCallback);
 
         }
 
-        $("#rok").inputmask("9999", {
-            "placeholder": "rrrr"
-        });
+//        $("#rok").inputmask("9999", {
+//            "placeholder": "rrrr"
+//        });
 
         $scope.gridOptions.data = PracownikResource.queryAll();
     });

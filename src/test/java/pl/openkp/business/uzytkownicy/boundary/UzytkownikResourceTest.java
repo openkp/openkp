@@ -11,15 +11,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package pl.openkp.business.pracownicy.boundary;
+package pl.openkp.business.uzytkownicy.boundary;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -30,10 +32,10 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import pl.openkp.business.pracownicy.entity.Pracownik;
+import pl.openkp.business.uzytkownicy.entity.Uzytkownik;
 
 @RunWith(Arquillian.class)
-public class PracownikResourceTest {
+public class UzytkownikResourceTest {
     @Deployment
     public static Archive<?> createTestArchive() {
         return ShrinkWrap.create(WebArchive.class, "test.war").addPackages(true, "pl.openkp")
@@ -43,23 +45,35 @@ public class PracownikResourceTest {
     }
 
     @Inject
-    PracownikResource pracownikResource;
-    @Inject
-    Logger log;
+    UzytkownikResource uzytkownikResource;
 
     @Test
-    public void testRegister() throws Exception {
-        Pracownik newMember = new Pracownik();
-        newMember.setDataZatrudnienia(Calendar.getInstance().getTime());
-        newMember.setDataZwolnienia(Calendar.getInstance().getTime());
-        newMember.setEmail("fasdfasdf@wp.pl");
-        newMember.setImie("fasdfasdf");
-        newMember.setKosztPodwyzszony(false);
-        newMember.setNazwisko("fasdfasfdasf");
-        newMember.setTelefon("afsdfasf");
-        newMember.setWynagrodzenie(BigDecimal.TEN);
-        pracownikResource.nowy(newMember);
-        assertNotNull(newMember.getId());
+    public void testNowy() throws Exception {
+        Uzytkownik encja = utworz();
+        uzytkownikResource.zapisz(encja);
+        assertNotNull(encja.getId());
 
+    }
+
+    @Test
+    public void testUsun() throws Exception {
+        Uzytkownik encja = utworz();
+        uzytkownikResource.zapisz(encja);
+        assertNotNull(encja.getId());
+        Response response = uzytkownikResource.usun(encja.getId());
+        assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
+        response = uzytkownikResource.uzytkownik(encja.getId());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
+    }
+
+    private Uzytkownik utworz() throws IOException {
+        Uzytkownik encja = new Uzytkownik();
+        encja.setEmail("test@wp.pl");
+        encja.setHaslo("xyz".getBytes());
+        encja.setImie("Jan");
+        encja.setLogin("jkowalski");
+        encja.setNazwisko("Kowalski");
+        encja.setZdjecie(Files.readAllBytes(Paths.get("src/test/resources/avatar2.png")));
+        return encja;
     }
 }
