@@ -16,7 +16,7 @@ OpenKP jest systemem kadrowo-płacowym do obsługi małych przedsiębiorstw.
  [http://localhost/openkp](http://localhost/openkp)
 
 ### Demo aplikacji
-* Demo dostępne jest pod adresem [http://www.demo.openkp.pl](http://www.demo.openkp.pl)
+* Demo dostępne jest pod adresem [http://demo-openkp.rhcloud.com/](http://demo-openkp.rhcloud.com/)
 
 ### Uczestnictwo w projekcie
 * Jeżeli chcesz uczestniczyć w tworzeniu systemu OpenKP zapoznaj się z treścią pliku [CONTRIBUTING.md](https://github.com/andrzejszywala/openkp/blob/master/CONTRIBUTING.md)
